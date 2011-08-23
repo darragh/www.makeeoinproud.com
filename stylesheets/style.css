@@ -1,0 +1,167 @@
+html {
+    background: #191919;
+    overflow-y: scroll;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    color: white;
+    width: 871px;
+    margin: 40px auto 0;
+    position: relative;
+}
+
+h1 {
+    font-weight: lighter;
+    font-size: 5em;
+    font-variant: small-caps;
+    margin-bottom: 0.36em
+}
+
+h1.book-title {
+    position: relative;
+    color: white;
+    font-weight: lighter;
+    left: 0;
+    font-size: 2em;
+    text-transform: uppercase;
+    vertical-align: top;
+    padding-left: 10px;
+}
+
+h1.book-title span {
+    position: absolute;
+    font-weight: lighter;
+
+    right: 10px;
+    padding-left: 1em;
+    font-size: 70%;
+    vertical-align: bottom;
+    bottom: 0
+}
+
+p {
+    font-size: 1.8em;
+    line-height: 1.3em;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid white;
+}
+
+a:hover {
+    border-bottom: 1px solid gray;
+    color: #999;;
+}
+
+h1 a {
+    text-decoration: none;
+    border: none;
+    color: white;
+}
+
+h1 a:hover {
+    color: #999;;
+}
+
+#memorial-book {
+    margin-top: 30px;
+    background: #666;
+    height: 428px;
+    padding: 6px 8px;
+    position: relative;
+}
+
+#memorial-book a {
+    border: none;
+}
+
+#spine {
+    position: absolute;
+    left: 419px;
+    height: 442px;
+    width: 30px;
+    top: -5px;
+    background: #555;
+    border-radius: 3px;
+    border-bottom: black 4px solid;
+}
+
+#pages {
+    width: 852px;
+    position: absolute;
+    top: 6px;
+    left: 9px;
+    border-right: 5px solid white;
+    border-left: 1px solid white;
+    height: 426px;
+}
+
+.progress-1 #pages {
+    left: 9px;
+    border-right: 5px solid white;
+    border-left: 1px solid white;
+}
+
+.progress-2 #pages {
+    left: 8px;
+    border-right: 4px solid white;
+    border-left: 2px solid white;
+}
+
+.progress-3 #pages {
+    left: 7px;
+    border-right: 3px solid white;
+    border-left: 3px solid white;
+}
+
+.progress-4 #pages {
+    left: 6px;
+    border-right: 2px solid white;
+    border-left: 4px solid white;
+}
+
+.progress-5 #pages {
+    left: 5px;
+    border-right: 1px solid white;
+    border-left: 5px solid white;
+}
+
+.pair {
+    display: none;
+}
+
+div.opened {
+    display: block;
+}
+
+div.opening {
+    display: block;
+}
+
+div.opened img {
+    z-index: 10;
+}
+
+img {
+    position: absolute;
+}
+
+.left img{
+    right: 426px;
+    border-top-right-radius: 70px 20px;
+    border-bottom-right-radius: 70px 10px;
+
+}
+
+.right img{
+    left: 426px;
+    border-top-left-radius: 70px 20px;
+    border-bottom-left-radius: 70px 10px;
+}
+
+.flipping img {
+    border: none;
+}
