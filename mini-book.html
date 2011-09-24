@@ -152,7 +152,7 @@
             return false;
         });
         var keyMap = {'J' : 'next', 'K' : 'previous', 37 : "previous", 39 : 'next'};
-        $('body').keydown(function(e) {
+        $(document).keydown(function(e) {
             var keyPressed = String.fromCharCode(e.keyCode);
             var event = keyMap[keyPressed];
             if(!event){

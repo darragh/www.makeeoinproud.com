@@ -17,7 +17,7 @@ captions = {
 7 : "1981, green saab, first driving..",
 8 : "christmas checkup for mum, probably 3.5",
 9 : "1985, trip to the zoo with darragh and triona",
-10 : "Summer Family holidays with the Griffins, 1987, comeeknowel Co Kerry",
+10 : "Summer Family holidays with the Griffins, 1987, Coomenoole Beach, Co Kerry",
 11 : "Summer Holidays with the sheehys, no inchydoney, billy, nuala, gran 1988",
 12 : "Circa 1988/1989 with John and Liz",
 13 : "In Fota wildlife park, circa 1989",
@@ -54,7 +54,7 @@ captions = {
 44 : "Billy, Jack, Eoin, Western style.",
 45 : "Google earth, google office NYC.",
 46 : "On a boat. Kite surfing course? I think?",
-47 : "Beech in Donegal (ask eilis where and when/)",
+47 : "~1st Janruary 2009, Machaire Rabhartaigh, Donegal",
 }
 
 def caption ( page ):
