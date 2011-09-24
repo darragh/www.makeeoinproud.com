@@ -18,14 +18,14 @@ class MemorialPage(webapp.RequestHandler):
 
 class MiniBookPage(webapp.RequestHandler):
     def get(self, page):
+        # todo - redirect bare to /
         if(page == None):
-            self.redirect("/mini-book/1..2")
-        else:
-            self.response.headers['Content-Type'] = 'text/html'
-            path = os.path.join(os.path.dirname(__file__), 'mini-book.html')
-            def odd(x): return x % 2 == 1
-            odd_pages = filter(odd, range(1,48))
-            self.response.out.write(template.render(path, {"current_page" : int(page), "all_pages" : odd_pages}))
+            page = 0
+        self.response.headers['Content-Type'] = 'text/html'
+        path = os.path.join(os.path.dirname(__file__), 'mini-book.html')
+        def odd(x): return x % 2 == 1
+        odd_pages = filter(odd, range(1,48))
+        self.response.out.write(template.render(path, {"current_page" : int(page), "all_pages" : odd_pages}))
 
 
 application = webapp.WSGIApplication([('/', IndexPage), ('/memorial', MemorialPage), (r'/mini-book(?:/|(?:/(\d\d?)\.\.\d\d?))?', MiniBookPage)],

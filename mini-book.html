@@ -6,28 +6,42 @@
 </head>
 <body>
 <h1 class="book-title">Eoin Curran <span>March 1980 &mdash; July 2010</span></h1>
-<div id="memorial-book" class="{{current_page|progress}}">
+<div id="memorial-book" class="{{current_page|progress}}" style="display:nonce;">
     <div id="spine"></div>
     <div id="pages">
+        <div class="pair {% ifequal current_page 0 %} opened{% endifequal %}" id="page0">
+            <div class="left notes" style="z-index:10"><p>Hello World</p></div>
+            <a href="1..2" class="right"><img src="/images/mini-book/0.jpg"  alt="Eoin, enjoying a family brunch in Dublin, soon before heading to New York. February 2010." width="426" height="426"/></a>
+        </div>
         {% for num in all_pages %}
             <div class="pair {% ifequal num current_page %} opened{% endifequal %}" id="page{{num}}">
                 {% ifequal num 1 %}
-                    <a href="1..2" class="left"><img src="/images/mini-book/{{num}}.jpg" width="426" height="426" /></a>
-                    <a href="2..3" class="right"><img src="/images/mini-book/{{num|add:1}}.jpg" width="426" height="426"/></a>
+                    <a href="1..2" class="left"><img src="/images/mini-book/{{num}}.jpg" alt="{{num|caption}}" width="426" height="426" /></a>
+                    <a href="2..3" class="right"><img src="/images/mini-book/{{num|add:1}}.jpg"  alt="{{num|add:1|caption}}" width="426" height="426"/></a>
                 {% endifequal %}
                 {% ifnotequal num 47 %}
                     {% ifnotequal num 1 %}
-                        <a href="{{num|minus:2}}..{{num|minus:1}}" class="left"><img src="/images/mini-book/{{num}}.jpg" width="426" height="426" /></a>
-                        <a href="{{num|add:2}}..{{num|add:3}}" class="right"><img src="/images/mini-book/{{num|add:1}}.jpg" width="426" height="426"/></a>
+                        <a href="{{num|minus:2}}..{{num|minus:1}}" class="left"><img src="/images/mini-book/{{num}}.jpg"  alt="{{num|caption}}" width="426" height="426" /></a>
+                        <a href="{{num|add:2}}..{{num|add:3}}" class="right"><img src="/images/mini-book/{{num|add:1}}.jpg"  alt="{{num|add:1|caption}}" width="426" height="426"/></a>
                     {% endifnotequal %}
                 {% endifnotequal %}
                 {% ifequal num 47 %}
-                    <a href="45..46" class="left"><img src="/images/mini-book/{{num}}.jpg" width="426" height="426"/></a>
-                    <a href="47..48" class="right"><img src="/images/mini-book/{{num|add:1}}.jpg" width="426" height="426"/></a>
+                    <a href="45..46" class="left"><img src="/images/mini-book/{{num}}.jpg"  alt="{{num|caption}}" width="426" height="426"/></a>
+                    <a href="47..48" class="right"><img src="/images/mini-book/{{num|add:1}}.jpg"  alt="{{num|add:1|caption}}" width="426" height="426"/></a>
                 {% endifequal %}
             </div>
         {% endfor %}
 
+    </div>
+    <div id="notes" style="">
+        {% ifequal current_page 0 %}
+            <div class="left" style="width: 400px; top: 470px; position:absolute; text-align: left;"></div>
+            <div class="right" style="width: 400px; top: 470px; left: 462px; position:absolute; text-align: right;">Eoin, enjoying a family brunch in Dublin, soon before heading to New York. February 2010.</div>
+        {% endifequal %}
+        {% ifnotequal current_page 0 %}
+            <div class="left" style="width: 400px; top: 470px; position:absolute; text-align: left;">{{current_page|caption}}</div>
+            <div class="right" style="width: 400px; top: 470px; left: 462px; position:absolute; text-align: right;">{{current_page|add:1|caption}}</div>
+        {% endifnotequal %}
     </div>
 </div>
 <script type="text/javascript">
@@ -48,6 +62,11 @@
             }
             $('#memorial-book').attr('class', "progress-" + part);
         };
+        var updateAndShowNewNotes = function(newPair) {
+            $('#notes .left').html($('a.left img', newPair).attr('alt') || "");
+            $('#notes .right').html($('a.right img', newPair).attr('alt') || "");
+            $('#notes .left, #notes .right').fadeIn(300);
+        };
         $('#memorial-book').bind('next', function() {
             var currentPair = $('.opened', this);
             var nextPair = $(currentPair).next();
@@ -61,13 +80,15 @@
 
             console.log("Next page: " + nextPageNumber);
 
-            currentPair.addClass('flipping');
             window.history.replaceState({}, "Pushed state", "/mini-book/" + nextPageNumber + ".." + (nextPageNumber + 1));
             nextPair.addClass('opening');
-            $('.right img', currentPair).addClass("flipping");
+            $('#notes .left, #notes .right').fadeOut(300);
+
             $('.right img', currentPair).animate({
                 width: 0
             }, 500, function() {
+                updateAndShowNewNotes(nextPair);
+
                 $('.left img', nextPair).css('width', 0);
                 $('.left img', nextPair).css('z-index', 11);
                 $('.left img', nextPair).animate({
@@ -78,6 +99,7 @@
                     nextPair.addClass('opened');
                     $('img', nextPair).css('z-index', 10);
                     $('img', currentPair).css('z-index', 9);
+
                     updateProgress(nextPageNumber);
                     flickInProgress = false;
                 });
@@ -94,12 +116,17 @@
             var nextPageNumber = parseInt(prevPair.attr('id').replace("page", ""), 10);
             console.log("Next page: " + nextPageNumber);
 
-            window.history.replaceState({'pageNumber' : nextPageNumber}, "Pushed state", "/mini-book/" + nextPageNumber + ".." + (nextPageNumber + 1));
+            var newHref = (nextPageNumber == 0) ? "/mini-book/" : ("/mini-book/" + nextPageNumber + ".." + (nextPageNumber + 1));
+            window.history.replaceState({'pageNumber' : nextPageNumber}, "Pushed state", newHref);
 
             prevPair.addClass('opening');
+            $('#notes .left, #notes .right').fadeOut(300);
+
             $('.left img', currentPair).animate({
                 width: 0
             }, 500, function() {
+                updateAndShowNewNotes(prevPair);
+
                 $('.right img', prevPair).css('width', 0);
                 $('.right img', prevPair).css('z-index', 11);
                 $('.right img', prevPair).animate({
@@ -110,7 +137,7 @@
                     prevPair.addClass('opened');
                     $('img', prevPair).css('z-index', 10);
                     $('img', currentPair).css('z-index', 9);
-                    console.log("flicked back");
+
                     updateProgress(nextPageNumber);
                     flickInProgress = false;
                 });
@@ -140,6 +167,6 @@
 
 <!--<p>Flick through a <a href="/mini-book">mini-book of photos of Eoin</a> going back through the years.</p>-->
 <!-- todo - link back to main site... and -->
-<!-- todo - some hint about the jk, stuff.. -->
+<!-- todo - some hint about the jk, stuff.. maybe allow other keys too...  -->
 </body>
 </html>

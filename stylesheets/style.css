@@ -51,6 +51,18 @@ a {
     border-bottom: 1px solid white;
 }
 
+#intro {
+    position: relative;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
+#intro img {
+    position: absolute:
+    top: 0px;
+    right: 5px;
+}
+
 a:hover {
     border-bottom: 1px solid gray;
     color: #999;;
@@ -156,12 +168,24 @@ img {
 
 }
 
+#pages div.left {
+    right: 426px;
+    border-top-right-radius: 70px 20px;
+    border-bottom-right-radius: 70px 10px;
+}
+
+div.notes {
+    background: white;
+    color: black;
+    position: absolute; width: 426px; height: 426px;
+}
+div.notes p {
+    padding: 10px;
+    margin: 0;
+}
+
 .right img{
     left: 426px;
     border-top-left-radius: 70px 20px;
     border-bottom-left-radius: 70px 10px;
-}
-
-.flipping img {
-    border: none;
 }
