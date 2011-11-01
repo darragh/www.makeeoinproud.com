@@ -5,12 +5,18 @@
     <title>Make Eoin proud : mini memorial book</title>
 </head>
 <body>
-<h1 class="book-title">Eoin Curran <span>March 1980 &mdash; July 2010</span></h1>
+<h1 class="book-title"><a href="/mini-book">Eoin Curran</a> <span>March 1980 &mdash; July 2010</span></h1>
 <div id="memorial-book" class="{{current_page|progress}}" style="display:nonce;">
     <div id="spine"></div>
     <div id="pages">
         <div class="pair {% ifequal current_page 0 %} opened{% endifequal %}" id="page0">
-            <div class="left notes" style="z-index:10"><p>Hello World</p></div>
+            <div class="left intro" style="z-index:10">
+                <p>We spend lots of time looking through photos of Eoin and wanted to share a few of them with you.</p>
+                <p>It's always nice to hear new stories about Eoin or old ones retold. Please keep sharing any that you've got.</p>
+                <dl class="fadeIn" style="display:none">
+                    <dt>&rarr; j</dt><dd>next page</dd><dt>&larr; k</dt><dd>previous page</dd>
+                </dl>
+            </div>
             <a href="1..2" class="right"><img src="/images/mini-book/0.jpg"  alt="Eoin, enjoying a family brunch in Dublin, soon before heading to New York. February 2010." width="426" height="426"/></a>
         </div>
         {% for num in all_pages %}
@@ -33,19 +39,27 @@
         {% endfor %}
 
     </div>
-    <div id="notes" style="">
-        {% ifequal current_page 0 %}
-            <div class="left" style="width: 400px; top: 470px; position:absolute; text-align: left;"></div>
-            <div class="right" style="width: 400px; top: 470px; left: 462px; position:absolute; text-align: right;">Eoin, enjoying a family brunch in Dublin, soon before heading to New York. February 2010.</div>
-        {% endifequal %}
-        {% ifnotequal current_page 0 %}
-            <div class="left" style="width: 400px; top: 470px; position:absolute; text-align: left;">{{current_page|caption}}</div>
-            <div class="right" style="width: 400px; top: 470px; left: 462px; position:absolute; text-align: right;">{{current_page|add:1|caption}}</div>
-        {% endifnotequal %}
+    <div id="notes">
+        {% if double_page %}
+            <div class="caption left fadeIn" style="display:none"></div>
+            <div class="caption right fadeIn" style="display:none"></div>
+            <div class="caption center fadeIn" style="display:none">{{current_page|caption}}</div>
+        {% else %}
+            {% ifequal current_page 0 %}
+                <div class="caption left fadeIn" style="display:none"></div>
+                <div class="caption right fadeIn" style="display:none">Eoin, enjoying a family brunch in Dublin, soon before heading to New York. February 2010.</div>
+            {% endifequal %}
+            {% ifnotequal current_page 0 %}
+                <div class="caption left fadeIn" style="display:none">{{current_page|caption}}</div>
+                <div class="caption right fadeIn" style="display:none">{{current_page|add:1|caption}}</div>
+            {% endifnotequal %}
+            <div class="caption center" style="display:none"></div>
+        {% endif %}
     </div>
 </div>
 <script type="text/javascript">
     $(function() {
+        $('.fadeIn').delay(500).fadeIn();
         var flickInProgress = false;
         var updateProgress = function(page) {
             var part = 1;
@@ -63,9 +77,16 @@
             $('#memorial-book').attr('class', "progress-" + part);
         };
         var updateAndShowNewNotes = function(newPair) {
-            $('#notes .left').html($('a.left img', newPair).attr('alt') || "");
-            $('#notes .right').html($('a.right img', newPair).attr('alt') || "");
-            $('#notes .left, #notes .right').fadeIn(300);
+            $('#notes .caption').html("");
+            var leftNote = $('a.left img', newPair).attr('alt') || "";
+            var rightNote = $('a.right img', newPair).attr('alt') || "";
+            if(leftNote == rightNote){
+                $('#notes .center').html(leftNote);
+            } else {
+                $('#notes .left').html(leftNote);
+                $('#notes .right').html(rightNote);
+            }
+            $('#notes .caption').delay(200).fadeIn();
         };
         $('#memorial-book').bind('next', function() {
             var currentPair = $('.opened', this);
@@ -82,7 +103,7 @@
 
             window.history.replaceState({}, "Pushed state", "/mini-book/" + nextPageNumber + ".." + (nextPageNumber + 1));
             nextPair.addClass('opening');
-            $('#notes .left, #notes .right').fadeOut(300);
+            $('#notes .caption').fadeOut();
 
             $('.right img', currentPair).animate({
                 width: 0
@@ -120,7 +141,7 @@
             window.history.replaceState({'pageNumber' : nextPageNumber}, "Pushed state", newHref);
 
             prevPair.addClass('opening');
-            $('#notes .left, #notes .right').fadeOut(300);
+            $('#notes .caption').fadeOut();
 
             $('.left img', currentPair).animate({
                 width: 0

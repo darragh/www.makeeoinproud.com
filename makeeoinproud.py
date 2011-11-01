@@ -25,7 +25,8 @@ class MiniBookPage(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__), 'mini-book.html')
         def odd(x): return x % 2 == 1
         odd_pages = filter(odd, range(1,48))
-        self.response.out.write(template.render(path, {"current_page" : int(page), "all_pages" : odd_pages}))
+        double_page = False
+        self.response.out.write(template.render(path, {"current_page" : int(page), "all_pages" : odd_pages, "double_page" : double_page}))
 
 
 application = webapp.WSGIApplication([('/', IndexPage), ('/memorial', MemorialPage), (r'/mini-book(?:/|(?:/(\d\d?)\.\.\d\d?))?', MiniBookPage)],

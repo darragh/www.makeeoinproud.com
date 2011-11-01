@@ -174,16 +174,57 @@ img {
     border-bottom-right-radius: 70px 10px;
 }
 
-div.notes {
-    background: white;
-    color: black;
+div.intro {
+    background: #333;
+    color: #ddd;
     position: absolute; width: 426px; height: 426px;
+    font-weight: lighter;
+    text-align: center;
+    font-size: 0.8em;
 }
-div.notes p {
+div.intro p, div.intro dl {
     padding: 10px;
+    margin: 10px;
+    line-height: 1.5em;
+}
+div.intro dl {
+    margin-top: 60px;
+}
+div.intro dt, div.intro dd {
+    font-weight: lighter;
+    font-style: italic;
+    padding: 5px 10px;
+    display: inline;
     margin: 0;
 }
-
+#notes {
+    color: #ddd;
+    font-weight: lighter;
+}
+#notes .left {
+    width: 400px;
+    top: 450px;
+    left: 2px;
+    position: absolute;
+    text-align: left;
+    padding: 10px;
+}
+#notes .right {
+    width: 400px;
+    top: 450px;
+    right: 2px;
+    position: absolute;
+    text-align: right;
+    padding: 10px;
+}
+#notes .center {
+    width: 846px;
+    top: 450px;
+    left: 2px;
+    position: absolute;
+    text-align: center;
+    padding: 10px;
+}
 .right img{
     left: 426px;
     border-top-left-radius: 70px 20px;
