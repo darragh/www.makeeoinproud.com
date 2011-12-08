@@ -236,3 +236,8 @@ div.intro dt, div.intro dd {
 ::-moz-selection {
     background: transparent;  
 }
+#memorial-book {
+  -moz-box-shadow: 5px 5px 5px #111;
+  -webkit-box-shadow: 5px 5px 5px #111;
+  box-shadow: 5px 5px 5px #111;
+}
