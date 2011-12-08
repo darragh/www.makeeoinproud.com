@@ -61,26 +61,70 @@
     $(function() {
         $('.fadeIn').delay(500).fadeIn();
         var flickInProgress = false;
-        var updateProgress = function(page) {
-            var part = 1;
-            if(page < 10) {
-                part = 1;
-            } else if (page < 20) {
-                part = 2
-            } else if (page < 30) {
-                part = 3;
-            } else if (page < 40) {
-                part = 4;
-            } else if (page < 50) {
-                part = 5;
+        var flickToNextPageIfAny = function(currentPages, pagesToFlickTo, animation) {
+            if (pagesToFlickTo.length <= 0 || flickInProgress) {
+                return;
             }
-            $('#memorial-book').attr('class', "progress-" + part);
+            flickInProgress = true;
+            pagesToFlickTo.addClass('opening');
+            $('#notes .caption').fadeOut();
+            updatePermalink(pagesToFlickTo);
+            animation(currentPages, pagesToFlickTo);
         };
-        var updateAndShowNewNotes = function(newPair) {
+        var updatePermalink = function(pagesToFlickTo) {
+            var newPageNumber = pageNumberFrom(pagesToFlickTo);
+            var isFirstPage = newPageNumber == 0;
+            var newHref = isFirstPage ? "/mini-book/" : ("/mini-book/" + newPageNumber + ".." + (newPageNumber + 1));
+            var newTitle = "Eoin Curran 1980 - 2010 : Memorial Book" + isFirstPage ? "" : " :: page " + newPageNumber + ".." + (newPageNumber + 1);
+            window.history.replaceState({'pageNumber' : newPageNumber}, newTitle, newHref);
+        };
+        var animateToNextPage = function(currentPages, pagesToFlickTo) {
+            animatePageFlicking('right', 'left', currentPages, pagesToFlickTo);
+        };
+        var animateToPreviousPage = function(currentPages, pagesToFlickTo) {
+            animatePageFlicking('left', 'right', currentPages, pagesToFlickTo);
+        };
+        var animatePageFlicking = function(from, to, currentPages, pagesToFlickTo) {
+            var toDisappear = '.' + from + ' img';
+            var toAppear = '.' + to + ' img';
+            $(toDisappear, currentPages).animate({
+                width: 0
+            }, 500, function() {
+                updateCaptions(pagesToFlickTo);
+                $(toAppear, pagesToFlickTo).css('width', 0);
+                $(toAppear, pagesToFlickTo).css('z-index', 11);
+                $(toAppear, pagesToFlickTo).animate({
+                    width: 426
+                }, 500, function() {
+                    currentPages.removeClass('opened');
+                    pagesToFlickTo.removeClass('opening');
+                    pagesToFlickTo.addClass('opened');
+                    $('img', pagesToFlickTo).css('z-index', 10);
+                    $('img', currentPages).css('z-index', 9);
+                    updatePageThickness(pagesToFlickTo);
+                    flickInProgress = false;
+                });
+            });
+        };
+        var updatePageThickness = function(pairOfPages) {
+            var leftPage = pageNumberFrom(pairOfPages);
+            var progress = 1;
+            if (leftPage >= 40) {
+                progress = 5;
+            } else if (leftPage >= 30) {
+                progress = 4
+            } else if (leftPage >= 20) {
+                progress = 3;
+            } else if (leftPage >= 10) {
+                progress = 2;
+            }
+            $('#memorial-book').attr('class', "progress-" + progress);
+        };
+        var updateCaptions = function(newPair) {
             $('#notes .caption').html("");
             var leftNote = $('a.left img', newPair).attr('alt') || "";
             var rightNote = $('a.right img', newPair).attr('alt') || "";
-            if(leftNote == rightNote){
+            if (leftNote == rightNote) {
                 $('#notes .center').html(leftNote);
             } else {
                 $('#notes .left').html(leftNote);
@@ -88,81 +132,16 @@
             }
             $('#notes .caption').delay(200).fadeIn();
         };
+        var pageNumberFrom = function(pages) {
+            return parseInt(pages.attr('id').replace("page", ""), 10);
+        };
         $('#memorial-book').bind('next', function() {
-            var currentPair = $('.opened', this);
-            var nextPair = $(currentPair).next();
-            if (nextPair.length <= 0 || flickInProgress) {
-                return;
-            }
-            flickInProgress = true;
-            var currentPageNumber = parseInt(currentPair.attr('id').replace("page", ""), 10);
-
-            var nextPageNumber = parseInt(nextPair.attr('id').replace("page", ""), 10);
-
-            console.log("Next page: " + nextPageNumber);
-
-            window.history.replaceState({}, "Pushed state", "/mini-book/" + nextPageNumber + ".." + (nextPageNumber + 1));
-            nextPair.addClass('opening');
-            $('#notes .caption').fadeOut();
-
-            $('.right img', currentPair).animate({
-                width: 0
-            }, 500, function() {
-                updateAndShowNewNotes(nextPair);
-
-                $('.left img', nextPair).css('width', 0);
-                $('.left img', nextPair).css('z-index', 11);
-                $('.left img', nextPair).animate({
-                    width: 426
-                }, 500, function() {
-                    currentPair.removeClass('opened');
-                    nextPair.removeClass('opening');
-                    nextPair.addClass('opened');
-                    $('img', nextPair).css('z-index', 10);
-                    $('img', currentPair).css('z-index', 9);
-
-                    updateProgress(nextPageNumber);
-                    flickInProgress = false;
-                });
-            });
+            var currentPages = $('.opened', this);
+            flickToNextPageIfAny(currentPages, $(currentPages).next(), animateToNextPage);
         });
         $('#memorial-book').bind('previous', function() {
-            var currentPair = $('.opened', this);
-            var prevPair = $(currentPair).prev();
-            if (prevPair.length <= 0 || flickInProgress) {
-                return;
-            }
-            flickInProgress = true;
-
-            var nextPageNumber = parseInt(prevPair.attr('id').replace("page", ""), 10);
-            console.log("Next page: " + nextPageNumber);
-
-            var newHref = (nextPageNumber == 0) ? "/mini-book/" : ("/mini-book/" + nextPageNumber + ".." + (nextPageNumber + 1));
-            window.history.replaceState({'pageNumber' : nextPageNumber}, "Pushed state", newHref);
-
-            prevPair.addClass('opening');
-            $('#notes .caption').fadeOut();
-
-            $('.left img', currentPair).animate({
-                width: 0
-            }, 500, function() {
-                updateAndShowNewNotes(prevPair);
-
-                $('.right img', prevPair).css('width', 0);
-                $('.right img', prevPair).css('z-index', 11);
-                $('.right img', prevPair).animate({
-                    width: 426
-                }, 500, function() {
-                    currentPair.removeClass('opened');
-                    prevPair.removeClass('opening');
-                    prevPair.addClass('opened');
-                    $('img', prevPair).css('z-index', 10);
-                    $('img', currentPair).css('z-index', 9);
-
-                    updateProgress(nextPageNumber);
-                    flickInProgress = false;
-                });
-            });
+            var currentPages = $('.opened', this);
+            flickToNextPageIfAny(currentPages, $(currentPages).prev(), animateToPreviousPage);
         });
         $('a.right').click(function() {
             $('#memorial-book').trigger('next');
@@ -176,7 +155,7 @@
         $(document).keydown(function(e) {
             var keyPressed = String.fromCharCode(e.keyCode);
             var event = keyMap[keyPressed];
-            if(!event){
+            if (!event) {
                 event = keyMap[e.keyCode];
             }
             if (event) {
@@ -188,6 +167,5 @@
 
 <!--<p>Flick through a <a href="/mini-book">mini-book of photos of Eoin</a> going back through the years.</p>-->
 <!-- todo - link back to main site... and -->
-<!-- todo - some hint about the jk, stuff.. maybe allow other keys too...  -->
 </body>
 </html>
