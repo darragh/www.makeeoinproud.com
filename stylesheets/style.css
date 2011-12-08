@@ -230,3 +230,9 @@ div.intro dt, div.intro dd {
     border-top-left-radius: 70px 20px;
     border-bottom-left-radius: 70px 10px;
 }
+::selection {
+    background: transparent;
+}
+::-moz-selection {
+    background: transparent;  
+}
