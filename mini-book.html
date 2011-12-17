@@ -3,6 +3,19 @@
     <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/style.css"/>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
     <title>Make Eoin proud : mini memorial book</title>
+    <script type="text/javascript">
+
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-623877-13']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+
+    </script>
 </head>
 <body>
 <h1 class="book-title"><a href="/mini-book">Eoin Curran</a> <span>March 1980 &mdash; July 2010</span></h1>
@@ -164,7 +177,27 @@
         });
     });
 </script>
-
+<script>
+    var intercomSettings = {
+        app_id: 'n47zs81w',
+        email: 'john.doe@example.com',
+        created_at: 315532800
+    };
+    (function() {
+        function async_load() {
+            var s = document.createElement('script');
+            s.type = 'text/javascript'; s.async = true;
+            s.src = 'https://api.intercom.io/api/js/library.js';
+            var x = document.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+        }
+        if (window.attachEvent) {
+            window.attachEvent('onload', async_load);
+        } else {
+            window.addEventListener('load', async_load, false);
+        };
+    })();
+</script>
 <!--<p>Flick through a <a href="/mini-book">mini-book of photos of Eoin</a> going back through the years.</p>-->
 <!-- todo - link back to main site... and -->
 </body>
