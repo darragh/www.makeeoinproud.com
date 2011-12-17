@@ -1,7 +1,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/style.css"/>
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <title>Make Eoin proud : mini memorial book</title>
     <script type="text/javascript">
 
@@ -18,8 +18,7 @@
     </script>
 </head>
 <body>
-<!--todo -->
-<h1 class="book-title"><a id="eoin-link" href="/{% ifnotequal current_page 0 %}mini-book{% endifnotequal %}">Eoin Curran</a> <span>March 1980 &mdash; July 2010</span></h1>
+<h1 class="book-title"><a id="eoin" href="/{% ifnotequal current_page 0 %}mini-book{% endifnotequal %}">Eoin Curran</a> <span>March 1980 &mdash; July 2010</span></h1>
 <div id="memorial-book" class="{{current_page|progress}}" style="display:nonce;">
     <div id="spine"></div>
     <div id="pages">
@@ -94,7 +93,7 @@
             window.history.replaceState({'pageNumber' : newPageNumber}, newTitle, newHref);
         };
         var updateEoinLink = function(newPageNumber) {
-            $('#eoin-link').href((newPageNumber == 0) ? "/" : "/mini-book");
+            $('#eoin').attr('href', (newPageNumber == 0) ? "/" : "/mini-book");
         };
         var animateToNextPage = function(currentPages, pagesToFlickTo) {
             animatePageFlicking('right', 'left', currentPages, pagesToFlickTo);
