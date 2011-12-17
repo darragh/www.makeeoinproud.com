@@ -18,7 +18,8 @@
     </script>
 </head>
 <body>
-<h1 class="book-title"><a href="/mini-book">Eoin Curran</a> <span>March 1980 &mdash; July 2010</span></h1>
+<!--todo -->
+<h1 class="book-title"><a id="eoin-link" href="/{% ifnotequal current_page 0 %}mini-book{% endifnotequal %}">Eoin Curran</a> <span>March 1980 &mdash; July 2010</span></h1>
 <div id="memorial-book" class="{{current_page|progress}}" style="display:nonce;">
     <div id="spine"></div>
     <div id="pages">
@@ -81,15 +82,19 @@
             flickInProgress = true;
             pagesToFlickTo.addClass('opening');
             $('#notes .caption').fadeOut();
-            updatePermalink(pagesToFlickTo);
+            var newPageNumber = pageNumberFrom(pagesToFlickTo);
+            updatePermalink(newPageNumber);
+            updateEoinLink(newPageNumber);
             animation(currentPages, pagesToFlickTo);
         };
-        var updatePermalink = function(pagesToFlickTo) {
-            var newPageNumber = pageNumberFrom(pagesToFlickTo);
+        var updatePermalink = function(newPageNumber) {
             var isFirstPage = newPageNumber == 0;
             var newHref = isFirstPage ? "/mini-book/" : ("/mini-book/" + newPageNumber + ".." + (newPageNumber + 1));
             var newTitle = "Eoin Curran 1980 - 2010 : Memorial Book" + isFirstPage ? "" : " :: page " + newPageNumber + ".." + (newPageNumber + 1);
             window.history.replaceState({'pageNumber' : newPageNumber}, newTitle, newHref);
+        };
+        var updateEoinLink = function(newPageNumber) {
+            $('#eoin-link').href((newPageNumber == 0) ? "/" : "/mini-book");
         };
         var animateToNextPage = function(currentPages, pagesToFlickTo) {
             animatePageFlicking('right', 'left', currentPages, pagesToFlickTo);
@@ -177,28 +182,5 @@
         });
     });
 </script>
-<script>
-    var intercomSettings = {
-        app_id: 'n47zs81w',
-        email: 'john.doe@example.com',
-        created_at: 315532800
-    };
-    (function() {
-        function async_load() {
-            var s = document.createElement('script');
-            s.type = 'text/javascript'; s.async = true;
-            s.src = 'https://api.intercom.io/api/js/library.js';
-            var x = document.getElementsByTagName('script')[0];
-            x.parentNode.insertBefore(s, x);
-        }
-        if (window.attachEvent) {
-            window.attachEvent('onload', async_load);
-        } else {
-            window.addEventListener('load', async_load, false);
-        };
-    })();
-</script>
-<!--<p>Flick through a <a href="/mini-book">mini-book of photos of Eoin</a> going back through the years.</p>-->
-<!-- todo - link back to main site... and -->
 </body>
 </html>
