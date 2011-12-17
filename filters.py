@@ -50,10 +50,10 @@ captions = {
 40 : "Wrapped up warm beside the fire in Mums chair, Christmas 2009",
 41 : "Ow. Brian bit my finger",
 42 : "With his treasured godson Brian",
-43 : "Playing jenga, NYC, Summer 2010",
+43 : "Playing Jenga, NYC, Summer 2010",
 44 : "Eoin, Jack and Billy - western style. the boardwalk, Ocean city, Maryland",
-45 : "Google earth, Google office NYC",
-46 : "On a boat",
+45 : "Google Earth Holodeck, Google office NYC",
+46 : "",
 47 : "Machaire Rabhartaigh, Donegal, 1st Janruary 2009",
 }
 
