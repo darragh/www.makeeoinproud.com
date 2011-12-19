@@ -24,7 +24,7 @@ captions = {
 14 : "In St Pats, Drmcondra, after some competitive Logo programming",
 15 : "Resting up, aged 12",
 16 : "Trophy awarded for scoring perfect 800 in SAT Maths, aged 15",
-17 : "With Naoise Gaffney in a hot spring on Green Tortoise tour across the US 2011",
+17 : "With Naoise Gaffney in a hot spring on Green Tortoise tour across the US 2001",
 18 : "Apr&egrave;s-ski with Darragh in the Micro Brasserie de Chamonix, 2007",
 19 : "Family portrait time!",
 20 : "Donal, Darragh and Eoin, Argentierre, Chamonix Valley, March 2007",
