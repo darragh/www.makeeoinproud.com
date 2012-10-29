@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
 
-gem 'unicorn'
+gem 'thin'
 gem 'sinatra'
 gem 'shotgun'
