@@ -1,0 +1,77 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" media="all" href="/stylesheets/style.css"/>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript" src="/javascripts/mini-book.js"></script>
+  <title>Make Eoin proud : mini memorial book</title>
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-623877-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function () {
+      var ga = document.createElement('script');
+      ga.type = 'text/javascript';
+      ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+</head>
+<body>
+<h1 class="book-title"><a id="eoin" href="/<%= 'mini-book' unless current_page.eql?(0) %>">Eoin Curran</a>
+  <span>March 1980 &mdash; July 2010</span></h1>
+
+<div id="memorial-book" class="<%= progress %>" style="display:nonce;">
+  <div id="spine"></div>
+  <div id="pages">
+    <div class="pair <%= 'opened' if current_page.eql?(0) %>" id="page0">
+      <div class="left intro" style="z-index:10">
+        <p>We spend lots of time looking through photos of Eoin and wanted to share a few of them with you.</p>
+
+        <p>It's always nice to hear new stories about Eoin or old ones retold. Please keep sharing any that you've
+          got.</p>
+        <dl class="fadeIn" style="display:none">
+          <dt>next page:</dt>
+          <dd>&rarr; j</dd>
+          <dt>previous page:</dt>
+          <dd>&larr; k</dd>
+        </dl>
+      </div>
+      <a href="1..2" class="right"><img src="/images/mini-book/0.jpg" alt="Eoin, enjoying a family brunch in Dublin, soon before heading to New York. February 2010." width="426" height="426"/></a>
+    </div>
+    <% (1..47).to_a.select { |i| i % 2 == 1 }.each do |num| %>
+      <div class="pair <%= 'opened' if num.eql?(current_page) %>" id="page<%= num %>">
+        <% if num.eql?(1) %>
+          <a href="1..2" class="left"><img src="/images/mini-book/<%= num %>.jpg" alt="<%= captions[num] %>" width="426" height="426"/></a>
+          <a href="2..3" class="right"><img src="/images/mini-book/<%= num + 1 %>.jpg" alt="<%= captions[num + 1] %>" width="426" height="426"/></a>
+        <% elsif num.eql?(47) %>
+          <a href="45..46" class="left"><img src="/images/mini-book/<%= num %>.jpg" alt="<%= captions[num] %>" width="426" height="426"/></a>
+          <a href="47..48" class="right"><img src="/images/mini-book/<%= num + 1 %>.jpg" alt="<%= captions[num + 1] %>" width="426" height="426"/></a>
+        <% else %>
+          <a href="<%= num - 2 %>..<%= num - 1 %>" class="left"><img src="/images/mini-book/<%= num %>.jpg" alt="<%= captions[num] %>" width="426" height="426"/></a>
+          <a href="<%= num + 2 %>..<%= num + 3 %>" class="right"><img src="/images/mini-book/<%= num + 1 %>.jpg" alt="<%= captions[num + 1] %>" width="426" height="426"/></a>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div id="notes">
+    <% if double_page %>
+      <div class="caption left fadeIn" style="display:none"></div>
+      <div class="caption right fadeIn" style="display:none"></div>
+      <div class="caption center fadeIn" style="display:none"><%= captions[current_page] %></div>
+    <% else %>
+      <% if current_page.eql?(0) %>
+        <div class="caption left fadeIn" style="display:none"></div>
+        <div class="caption right fadeIn" style="display:none"><%= captions[0] %></div>
+      <% else %>
+        <div class="caption left fadeIn" style="display:none"><%= captions[current_page] %></div>
+        <div class="caption right fadeIn" style="display:none"><%= captions[current_page + 1] %></div>
+      <% end %>
+      <div class="caption center" style="display:none"></div>
+    <% end %>
+  </div>
+</div>
+</body>
+</html>
